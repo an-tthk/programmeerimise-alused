@@ -1,7 +1,10 @@
+# Импортируем библиотеки
 import random
 
+# Делаем словарь глобальным
 user_arr = dict()
 
+# Генерация случайного пароля
 def gen_passwd(plen: int):
     str0 = ".,:;!_*-+()/#§%&"
     str1 = '0123456789'
@@ -15,59 +18,69 @@ def gen_passwd(plen: int):
     # Извлекаем из списка plen произвольных значений, и возвращаем готовый пароль
     return ''.join([random.choice(ls) for x in range(plen)])
 
+# Проверка пароля на прочность по критериям
 def chk_passwd(passwd: str):
+    # Если пароль отсутствует или менее 8 символов
     if (passwd == "" or len(passwd) < 8):
         print("Password is empty too short.")
-        return False # empty password
-
+        return False
+    # Если нет цифр в пароле
     if not any(char.isdigit() for char in passwd):
         print("No digit.")
-        return False # low quality
-
+        return False
+    # Если нет uppercase буквы
     if not any(char.isupper() for char in passwd):
         print("No upper character.")
-        return False # low quality
-
+        return False
+    # Если нет lowercase буквы
     if not any(char.islower() for char in passwd):
         print("No lower character.")
-        return False # low quality
-
+        return False
+    # Если нет спецсимволов
     if not any(char in ".,:;!_*-+()/#§%&" for char in passwd):
         print("No special character.")
-        return False # low quality
+        return False
+    # Иначе возвращаем что всё хорошо
+    return True
 
-    return True # OK
-
+# Вывод списка пользователей в консоль
 def ShowUsers():
+    # Если словарь пустой, то пользователей еще нет
     if len(user_arr) == 0:
         print("Пользователей нет.")
         return
-
+    # Возвращаем список пользователей системы и их пароль
     print("Пользователи системы:")
     for u, passwd in user_arr.items():
         print(f"User \"{u}\": {passwd}")
 
     return
 
+# Вход в систему (эмуляция)
 def Login():
     print("Здравствуйте, добро пожаловать в форму входа уч. заведения TTHK.")
 
     tmp_login = input("Введите логин => ")
     tmp_passwd = input("Введите пароль => ")
 
+    # Проверяем есть ли у нас такой пользователь
     if not tmp_login in user_arr:
         print(f"Пользователь не найден.")
         return
+    # Если пользователь присутствует, проверяем верный ли пароль
     elif user_arr.get(tmp_login) != tmp_passwd:
         print(f"Не верный пароль.")
         return
     
+    # Если всё верно, то мы успешно вошли
     print("Вход успешен.")
     return
 
+# Регистрация в системе (эмуляция)
 def Registration():
     print("Здравствуйте, добро пожаловать в рег. форму уч. заведения TTHK.")
 
+    # Три попытки на регистрацию, проверка уже существующего пользователя в системе и кол-во символов хотя бы > 1
     try_ = 0
     while try_ < 3:
         tmp_login = input("Введите логин для регистрации => ")
@@ -78,10 +91,12 @@ def Registration():
         elif len(tmp_login) > 1:
             break
 
+    # Если 3 попытки использовали, выходим (тут нужно вешать бан по ip, чтоб не брутфорсили :))
     if try_ == 3:
         print("Попробуйте еще раз.")
         return
 
+    # Три попытки на регистрацию, проверка уже пароля на прочность, либо автогенерация
     try_ = 0
     while try_ < 3:
         tmp_passwd = input("Введите пароль (оставьте пустым для автогенерации) => ")
@@ -94,6 +109,7 @@ def Registration():
 
         break
 
+    # Если 3 попытки использовали, выходим (так же баним по ip как и выше при не верном логине)
     if try_ == 3:
         print("Попробуйте еще раз.")
         return
@@ -101,9 +117,5 @@ def Registration():
     user_arr.update({ tmp_login: tmp_passwd })
     print(f"Пользователь {tmp_login} успешно зарегистрирован, ваш пароль : {tmp_passwd}")
     print(f"\r")
-
-    print("Пользователи системы:")
-    for u, passwd in user_arr.items():
-        print(f"User \"{u}\": {passwd}")
 
     return
