@@ -1,0 +1,19 @@
+Tavaline haldjarüü;50
+Võlupüksid;100
+Välguvastane pross;250
+Võlukeep;1000
+Suure jõu sõrmus;750
+Vöökott;150
+Suur võlukott;800
+Kiiruse saapad;500
+Rahakott;750
+Väga suure osavuse sõrmus;900
+Väike raudvõlukilp;100
+Tugevalt neetud kindad;250
+Tavaline kirves;50
+Väsimise jook;350
+Tarkuse jook;300
+Väikeste haavade ravi jook;200
+Väga suure osavuse kindad;600
+Külmavastane ripats;400
+Tulevastane ehe;650
